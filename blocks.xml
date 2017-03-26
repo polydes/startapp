@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<palette>
+    
+    <block tag="initStartApp" spec="Initialize StartApp with 'appID': %0 with the banner at the %1 [c:startapp]" code="StartApp.init(~,~);" Help="When select None, no banner will load/display" type="action" color="charcoal" returns="void">
+        <fields>
+            <text order="0"></text>
+            <dropdown order="1">
+                <choices>
+                    <c text="Bottom" code="&quot;BOTTOM&quot;"></c>
+                    <c text="Top" code="&quot;TOP&quot;"></c>
+                    <c text="None" code="&quot;NONE&quot;"></c>
+                </choices>
+            </dropdown>
+        </fields>
+    </block>
+    
+    <block tag="show_hide_startappbanner" spec="%0 StartApp Banner Ad [c:startapp]" code="StartApp.~Banner();" help="Show/Hide Banner" type="action" color="charcoal" returns="void">
+        <fields>
+            <dropdown order="0">
+                <choices>
+                    <c text="Show" code="show"></c>
+                    <c text="Hide" code="hide"></c>
+                </choices>
+            </dropdown>
+        </fields>
+    </block>
+    
+    <block tag="load_startappAd" spec="Load StartApp %0 Ad [c:startapp]" code="StartApp.load~();" help="Load Interststitial first before you can show it." type="action" color="charcoal" returns="void">
+        <fields>
+            <dropdown order="0">
+                <choices>
+                    <c text="Interstitial" code="Interstitial"></c>
+                    <c text="Rewarded" code="Rewarded"></c>
+                </choices>
+            </dropdown>
+        </fields>
+    </block>
+    
+    <block tag="show_startappAd" spec="Show StartApp Interstitial/Rewarded Ad [c:startapp]" code="StartApp.showInterstitial();" help="Load Interststitial first before you can show it." type="action" color="charcoal" returns="void">
+        <fields>
+        </fields>
+    </block>
+	
+	<block tag="setbannerposition_startappbanner" spec="Move StartApp Banner to %0 [c:startapp]" code="StartApp.setBannerPosition(~);" help="Show/Hide Banner" type="action" color="charcoal" returns="void">
+        <fields>
+            <dropdown order="0">
+                <choices>
+                    <c text="Bottom" code="&quot;BOTTOM&quot;"></c>
+                    <c text="Top" code="&quot;TOP&quot;"></c>
+                </choices>
+            </dropdown>
+        </fields>
+    </block>
+    
+    <block tag="getbannerinfoStartApp" spec="StartApp Banner Ad %0 [c:startapp]" code="StartApp.~()" type="normal" color="charcoal" returns="boolean">
+        <fields>
+            <dropdown order="0">
+                <choices>
+                    <c text="did display" code="bannerDidDisplay"></c>
+                    <c text="failed to load" code="bannerFailedToLoad"></c>
+                    <c text="is clicked" code="bannerIsClicked"></c>
+                </choices>
+            </dropdown>
+        </fields>
+    </block>
+    
+    <block tag="getinterstitialInfoStartApp" spec="StartApp Interstitial/Rewarded Ad %0 [c:startapp]" code="StartApp.~()" type="normal" color="charcoal" returns="boolean">
+        <fields>
+            <dropdown order="0">
+                <choices>
+                    <c text="is loaded " code="interstitialDidLoad"></c>
+                    <c text="failed to load" code="interstitialFailedToLoad"></c>
+                    <c text="did show" code="interstitialDidShow"></c>
+                    <c text="failed to show" code="interstitialFailedToShow"></c>
+                    <c text="is closed" code="interstitialDidClosed"></c>
+                    <c text="is clicked" code="interstitialIsClicked"></c>
+                    <c text="is fully watched" code="rewardedFullyWatched"></c>
+                </choices>
+            </dropdown>
+        </fields>
+    </block>
+    
+    
+</palette>

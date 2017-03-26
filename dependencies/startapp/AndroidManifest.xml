@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          package="::APP_PACKAGE::"
+    android:versionCode="::APP_BUILD_NUMBER::"
+    android:versionName="::APP_VERSION::"
+    android:installLocation="::ANDROID_INSTALL_LOCATION::">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    
+     <!-- Note: StartApp SDK doesn't request location updates proactively but only uses the last known location. -->
+    <!--<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />-->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <application>
+        <activity android:name="com.startapp.android.publish.ads.list3d.List3DActivity"
+        android:theme="@android:style/Theme" />
+        
+        <activity android:name="com.startapp.android.publish.adsCommon.activities.OverlayActivity"
+        android:theme="@android:style/Theme.Translucent"
+        android:configChanges="orientation|keyboardHidden|screenSize" />
+        
+        <activity android:name="com.startapp.android.publish.adsCommon.activities.FullScreenActivity"
+        android:theme="@android:style/Theme"
+        android:configChanges="orientation|keyboardHidden|screenSize" />
+        
+        <service android:name="com.startapp.android.publish.common.metaData.PeriodicMetaDataService" />
+        <service android:name="com.startapp.android.publish.common.metaData.InfoEventService" />
+        <receiver android:name="com.startapp.android.publish.common.metaData.BootCompleteListener" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>
