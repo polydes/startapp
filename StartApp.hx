@@ -16,6 +16,8 @@ import com.stencyl.Engine;
 import com.stencyl.Input;
 import openfl.events.MouseEvent;
 
+import scripts.ByRobinAssets;
+
 class StartApp {
 	
 	private static var initialized:Bool=false;
@@ -49,8 +51,14 @@ class StartApp {
 
 	////////////////////////////////////////////////////////////////////////////
 	
-	public static function init(appId:String, gMode:String){
-	
+	public static function init(gMode:String){
+		
+		#if ios
+		var appId:String = ByRobinAssets.SAIosAppID;
+		#elseif android
+		var appId:String = ByRobinAssets.SAAndroidAppID;
+		#end
+		
 		#if ios
 		if(initialized) return;
 		initialized = true;

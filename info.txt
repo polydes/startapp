@@ -1,6 +1,7 @@
-name=StartApp v0.0.3 (byRobin)
+name=StartApp v0.0.4 (byRobin)
 description=Implements StartApp for iOS and Android.
 author=Robin Schaafsma
 website=http://www.byrobingames.com
-version=0.0.3
+version=0.0.4
 compatibility=mobile
+dependencies=toolset-com.byrobingames.manager-0.0.1
