@@ -19,25 +19,55 @@ This Extension Required the Toolset Extension Manager [https://byrobingames.gith
 ## How to Install
 
 To install this Engine Extension, go to the toolset (byRobin Extension Mananger) in the Extension menu of your game inside Stencyl.<br/>
-Select the Engine Extension from the left menu and click on "Download"
+![toolsetextensionlocation](https://byrobingames.github.io/img/toolset/toolsetextensionlocation.png)<br/>
+Select the Extension from the menu and click on "Download"
 
-If you not have byRobin Extension Mananger installed, install this first.
+If you not have byRobin Extension Mananger installed, install this first.<br/>
 Go to: [https://byrobingames.github.io](https://byrobingames.github.io)
 
 ## Documentation and Block Examples
 
-If you don’t have an account, create one on http://www.startapp.com and get your “AppId”.
+If you don’t have an account, create one on http://www.startapp.com and get your “AppId”.<br/>
+Fill in your “AppId” in the Toolset Manager<br/>
+![startappappid](https://byrobingames.github.io/img/startapp/startappappid.png)<br/>
 
 Load an Interstitial of Rewarded Video first before you can show. Interstitial and Rewarded cannot load at the same time. Load next after the first one has showed.
 
 ### Blocks
 
-- Initialize StartApp
-- Hide/Show StartApp Banner
-- Move StartApp Banner to
-- Load StartApp Interstitial of Rewarded Video
-- Show StartApp Interstitial of Rewarded Video
-- Callback for Interstitial/ Rewarded Video
+**Initialize StartApp**<br/>
+![startappinitialize](https://byrobingames.github.io/img/startapp/startappinitialize.png)<br/>
+Use this block to initialize StartApp. Use this block once per user session (from the moment the user starts to play until the user quits the game). For example in a loading scene.<br/>
+
+<hr/>
+
+**Hide/Show Banner**<br/>
+![startappshowhidebanner](https://byrobingames.github.io/img/startapp/startappshowhidebanner.png)<br/>
+Use this block to hide or show banner ad.<br/>
+
+<hr/>
+
+**Move Banner to**<br/>
+![startappmovebanner](https://byrobingames.github.io/img/startapp/startappmovebanner.png)<br/>
+Use this block to move a banner ad to bottom or top.<br/>
+
+<hr/>
+
+**Load Interstitial or Rewarded Video**<br/>
+![startapploadads](https://byrobingames.github.io/img/startapp/startapploadads.png)<br/>
+Use this block to load Interstitial or Rewarded Video ads.<br/>
+
+<hr/>
+
+**Show Interstitial of Rewarded Video**<br/>
+![startappshowads](https://byrobingames.github.io/img/startapp/startappshowads.png)<br/>
+Use this block to show Interstitial or Rewarded Video ads. (load first before calling show)<br/>
+
+<hr/>
+
+**Callback for Interstitial/ Rewarded Video**<br/>
+![startappcallbacks](https://byrobingames.github.io/img/startapp/startappcallbacks.png)<br/>
+Use this block to get callbacks.
 
 ## Version History
 
@@ -55,6 +85,14 @@ Repository: [https://github.com/byrobingames/startapp](https://github.com/byrobi
 
 Need help with a pull request?<br/>
 [https://help.github.com/articles/creating-a-pull-request/](https://help.github.com/articles/creating-a-pull-request/)
+
+### ANY ISSUES?
+
+Add the issue on GitHub<br/>
+Repository: [https://github.com/byrobingames/startapp/issues](https://github.com/byrobingames/startapp/issues)
+
+Need help with creating a issue?<br/>
+[https://help.github.com/articles/creating-an-issue/](https://help.github.com/articles/creating-an-issue/)
 
 ## Donate
 
