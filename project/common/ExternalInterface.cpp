@@ -66,6 +66,18 @@ static value startapp_rewarded_load(){
     return alloc_null();
 }
 DEFINE_PRIM(startapp_rewarded_load,0);
+
+static value startapp_setconsent(value isGranted){
+    setStartAppConsent(val_bool(isGranted));
+    return alloc_null();
+}
+DEFINE_PRIM(startapp_setconsent,1);
+
+static value startapp_getconsent(){
+    return alloc_bool(getStartAppConsent());
+}
+DEFINE_PRIM(startapp_getconsent,0);
+
 #endif
 
 extern "C" void startapp_main () {

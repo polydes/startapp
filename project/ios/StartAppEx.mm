@@ -26,7 +26,7 @@ extern "C" void sendStartAppEvent(char* event);
     BOOL rewardedload;
 }
 
-- (id)initWithAppID:(NSString*)APPID withGravity:GMODE;
+- (id)initWithAppID:(NSString*)APPID withGravity:(NSString*)GMODE;
 - (void)showBannerAd;
 - (void)hideBannerAd;
 
@@ -46,7 +46,7 @@ extern "C" void sendStartAppEvent(char* event);
 @synthesize initBanner;
 @synthesize rewardedload;
 
-- (id)initWithAppID:(NSString*)APPID withGravity:GMODE
+- (id)initWithAppID:(NSString*)APPID withGravity:(NSString*)GMODE
 {
     self = [super init];
     NSLog(@"StartApp Init");
@@ -73,6 +73,7 @@ extern "C" void sendStartAppEvent(char* event);
         [root.view addSubview:startAppBannerView];
     }
     
+    
     return self;
 }
 ////Banner
@@ -91,7 +92,7 @@ extern "C" void sendStartAppEvent(char* event);
 
 -(void)setPosition:(NSString*)position
 {
-    
+    NSLog(@"StartApp set position");
     bottom=[position isEqualToString:@"BOTTOM"];
     
     if (bottom)
@@ -121,6 +122,7 @@ extern "C" void sendStartAppEvent(char* event);
 ///Interstitial
 - (void)loadInterstitialAd
 {
+    NSLog(@"StartApp load interstitialAd");
         if(startAppAd == NULL){
             startAppAd = [[STAStartAppAd alloc] init];
         }
@@ -133,6 +135,7 @@ extern "C" void sendStartAppEvent(char* event);
 
 - (void)showInterstitialAd
 {
+    NSLog(@"StartApp show interstitialAd");
     if([startAppAd isReady]){
         [startAppAd showAd];
     }
@@ -140,6 +143,7 @@ extern "C" void sendStartAppEvent(char* event);
 
 - (void)loadRewardedAd
 {
+    NSLog(@"StartApp load rewarded");
     if(startAppAd == NULL){
         startAppAd = [[STAStartAppAd alloc] init];
     }
@@ -172,19 +176,19 @@ extern "C" void sendStartAppEvent(char* event);
     sendStartAppEvent("interstitialdidclosed");
     
     //work around for didCompleteVideo
-    if(rewardedload){
+    /*if(rewardedload){
         rewardedload = NO;
         sendStartAppEvent("rewardedfullywatched");
-    }
+    }*/
 }
 
 - (void) didClickAd:(STAAbstractAd*)ad {
     sendStartAppEvent("interstitialisclicked");
 }
 //App crashes when called didCompleteVideo after Video is finish.
-//- (void) didCompleteVideo:(STAAbstractAd*)ad {
-//    sendStartAppEvent("rewardedfullywatched");
-//}
+- (void) didCompleteVideo:(STAAbstractAd*)ad {
+    sendStartAppEvent("rewardedfullywatched");
+}
 
 @end
 
@@ -245,6 +249,21 @@ namespace startapp {
     {
         
         if(startAppController!=NULL) [startAppController loadRewardedAd];
+    }
+    
+    void setStartAppConsent(bool isGranted)
+    {
+        [[STAStartAppSDK sharedInstance] setUserConsent:isGranted forConsentType:@"pas" withTimestamp:[[NSDate date] timeIntervalSince1970]];
+        
+        [[NSUserDefaults standardUserDefaults] setBool:isGranted forKey:@"gdpr_consent_startapp"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        NSLog(@"StartApp SetConsent:  %@", @(isGranted));
+    }
+    
+    bool getStartAppConsent()
+    {
+        return [[NSUserDefaults standardUserDefaults] boolForKey:@"gdpr_consent_startapp"];
     }
     
     

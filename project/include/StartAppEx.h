@@ -13,6 +13,8 @@ namespace startapp {
     void loadInterstitial();
     void showInterstitial();
     void loadRewarded();
+    void setStartAppConsent(bool isGranted);
+    bool getStartAppConsent();
 }
 
 

@@ -9,6 +9,7 @@ package com.byrobin.startapp;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.Intent;
 import android.os.*;
 import android.util.Log;
@@ -258,6 +259,41 @@ public class StartAppEx extends Extension {
             }
         });
     }
+
+static public void setUsersConsent(final boolean isGranted){
+
+    StartAppSDK.setUserConsent (mainActivity,
+                                "pas",
+                                System.currentTimeMillis(),
+                                isGranted);
+
+    SharedPreferences.Editor editor = mainActivity.getPreferences(Context.MODE_PRIVATE).edit();
+    if(editor == null) {
+            Log.d("StartAppEx", "StartAppEx Failed to write user consent to preferences");
+            return;
+    }
+
+    editor.putBoolean("gdpr_consent_startapp", isGranted);
+    boolean committed = editor.commit();
+
+    if(!committed) {
+            Log.d("StartAppEx", "StartAppEx Failed to write user consent to preferences");
+    }
+}
+
+    public static boolean getUsersConsent(){
+
+    SharedPreferences prefs = mainActivity.getPreferences(Context.MODE_PRIVATE);
+    if(prefs == null) {
+            Log.i("StartAppEx", "StartAppEx Failed to read user conent preference data");
+    }
+
+    final Boolean isGranted = prefs.getBoolean("gdpr_consent_startapp", false);
+
+    Log.d("StartAppEx","StartAppEx get userConsent is: " + isGranted);
+
+    return isGranted;
+}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////

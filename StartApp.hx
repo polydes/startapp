@@ -9,7 +9,11 @@ import openfl.Lib;
 #end
 
 #if android
+#if openfl_legacy
 import openfl.utils.JNI;
+#else
+import lime.system.JNI;
+#end
 #end
 
 import com.stencyl.Engine;
@@ -19,7 +23,7 @@ import openfl.events.MouseEvent;
 import scripts.ByRobinAssets;
 
 class StartApp {
-	
+
 	private static var initialized:Bool=false;
 	private static var _bannerDidDisplay:Bool=false;
 	private static var _bannerFailedToLoad:Bool=false;
@@ -31,7 +35,7 @@ class StartApp {
 	private static var _interstitialDidClosed:Bool=false;
 	private static var _interstitialIsClicked:Bool=false;
 	private static var _rewardedFullyWatched:Bool=false;
-	
+
 
 	////////////////////////////////////////////////////////////////////////////
 	#if ios
@@ -44,21 +48,23 @@ class StartApp {
 	private static var __showBanner:Void->Void = function(){};
 	private static var __hideBanner:Void->Void = function(){};
 	private static var __setBannerPosition:String->Void = function(gMode:String){};
-	
+
 	private static var __loadInterstitial:Void->Void = function(){};
 	private static var __showInterstitial:Void->Void = function(){};
 	private static var __loadRewarded:Void->Void = function(){};
+	private static var __setConsent:Bool->Void = function(isGranted:Bool){};
+	private static var __getConsent:Void->Bool = function(){return false;};
 
 	////////////////////////////////////////////////////////////////////////////
-	
+
 	public static function init(gMode:String){
-		
+
 		#if ios
 		var appId:String = ByRobinAssets.SAIosAppID;
 		#elseif android
 		var appId:String = ByRobinAssets.SAAndroidAppID;
 		#end
-		
+
 		#if ios
 		if(initialized) return;
 		initialized = true;
@@ -71,6 +77,8 @@ class StartApp {
 			__loadInterstitial = Lib.load("startapp","startapp_interstitial_load",0);
 			__showInterstitial = Lib.load("startapp","startapp_interstitial_show",0);
 			__loadRewarded = Lib.load("startapp","startapp_rewarded_load",0);
+			__setConsent = cpp.Lib.load("startapp","startapp_setconsent",1);
+			__getConsent = cpp.Lib.load("startapp","startapp_getconsent",0);
 
 			__init(appId,gMode);
 			__startapp_set_event_handle(notifyListeners);
@@ -78,24 +86,26 @@ class StartApp {
 			trace("iOS INIT Exception: "+e);
 		}
 		#end
-		
+
 		#if android
 		if(initialized) return;
 		initialized = true;
 		try{
 			// JNI METHOD LINKING
-			__showBanner = openfl.utils.JNI.createStaticMethod("com/byrobin/startapp/StartAppEx", "showBanner", "()V");
-			__hideBanner = openfl.utils.JNI.createStaticMethod("com/byrobin/startapp/StartAppEx", "hideBanner", "()V");
-			__setBannerPosition = openfl.utils.JNI.createStaticMethod("com/byrobin/startapp/StartAppEx", "setBannerPosition", "(Ljava/lang/String;)V");
-			__loadInterstitial = openfl.utils.JNI.createStaticMethod("com/byrobin/startapp/StartAppEx", "loadInterstitial", "()V");
-			__showInterstitial = openfl.utils.JNI.createStaticMethod("com/byrobin/startapp/StartAppEx", "showInterstitial", "()V");
-			__loadRewarded = openfl.utils.JNI.createStaticMethod("com/byrobin/startapp/StartAppEx", "loadRewarded", "()V");
-			
+			__showBanner = JNI.createStaticMethod("com/byrobin/startapp/StartAppEx", "showBanner", "()V");
+			__hideBanner = JNI.createStaticMethod("com/byrobin/startapp/StartAppEx", "hideBanner", "()V");
+			__setBannerPosition = JNI.createStaticMethod("com/byrobin/startapp/StartAppEx", "setBannerPosition", "(Ljava/lang/String;)V");
+			__loadInterstitial = JNI.createStaticMethod("com/byrobin/startapp/StartAppEx", "loadInterstitial", "()V");
+			__showInterstitial = JNI.createStaticMethod("com/byrobin/startapp/StartAppEx", "showInterstitial", "()V");
+			__loadRewarded = JNI.createStaticMethod("com/byrobin/startapp/StartAppEx", "loadRewarded", "()V");
+			__setConsent = JNI.createStaticMethod("com/byrobin/startapp/StartAppEx", "setUsersConsent", "(Z)V");
+			__getConsent = JNI.createStaticMethod("com/byrobin/startapp/StartAppEx", "getUsersConsent", "()Z");
+
 			if(__init == null)
 			{
 				__init = JNI.createStaticMethod("com/byrobin/startapp/StartAppEx", "init", "(Lorg/haxe/lime/HaxeObject;Ljava/lang/String;Ljava/lang/String;)V", true);
 			}
-	
+
 			var args = new Array<Dynamic>();
 			args.push(new StartApp());
 			args.push(appId);
@@ -106,7 +116,7 @@ class StartApp {
 		}
 		#end
 	}
-	
+
 	////Banner
 	public static function showBanner() {
 		try {
@@ -115,7 +125,7 @@ class StartApp {
 			trace("Show Banner Exception: "+e);
 		}
 	}
-	
+
 	public static function hideBanner() {
 		try {
 			__hideBanner();
@@ -123,7 +133,7 @@ class StartApp {
 			trace("Hide Banner Exception: "+e);
 		}
 	}
-	
+
 	public static function setBannerPosition(gMode:String) {
 		try {
 			__setBannerPosition(gMode);
@@ -131,38 +141,51 @@ class StartApp {
 			trace("Set Banner Position Exception: "+e);
 		}
 	}
-	
+
+	public static function setConsent(isGranted:Bool) {
+		try {
+			__setConsent(isGranted);
+		} catch(e:Dynamic) {
+			trace("SetConsent Exception: "+e);
+		}
+	}
+
+	public static function getConsent():Bool {
+
+		return __getConsent();
+	}
+
 	////
 	public static function bannerDidDisplay():Bool{
-		
+
 		if(_bannerDidDisplay){
 			_bannerDidDisplay = false;
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	public static function bannerFailedToLoad():Bool{
-		
+
 		if(_bannerFailedToLoad){
 			_bannerFailedToLoad = false;
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	public static function bannerIsClicked():Bool{
-		
+
 		if(_bannerIsClicked){
 			_bannerIsClicked = false;
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	/////Interstitial
 	public static function loadInterstitial() {
 		try {
@@ -171,7 +194,7 @@ class StartApp {
 			trace("Load Interstitial Exception: "+e);
 		}
 	}
-	
+
 	public static function loadRewarded() {
 		try {
 			__loadRewarded();
@@ -179,7 +202,7 @@ class StartApp {
 			trace("Load Rewarded Exception: "+e);
 		}
 	}
-	
+
 	public static function showInterstitial() {
 		try {
 			__showInterstitial();
@@ -187,85 +210,85 @@ class StartApp {
 			trace("Show Interstitial Exception: "+e);
 		}
 	}
-	
+
 	public static function interstitialDidLoad():Bool{
-		
+
 		if(_interstitialDidLoad){
 			_interstitialDidLoad = false;
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	public static function interstitialFailedToLoad():Bool{
-		
+
 		if(_interstitialFailedToLoad){
 			_interstitialFailedToLoad = false;
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	public static function interstitialDidShow():Bool{
-		
+
 		if(_interstitialDidShow){
 			_interstitialDidShow = false;
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	public static function interstitialFailedToShow():Bool{
-		
+
 		if(_interstitialFailedToShow){
 			_interstitialFailedToShow = false;
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	public static function interstitialDidClosed():Bool{
-		
+
 		if(_interstitialDidClosed){
 			_interstitialDidClosed = false;
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	public static function interstitialIsClicked():Bool{
-		
+
 		if(_interstitialIsClicked){
 			_interstitialIsClicked = false;
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	public static function rewardedFullyWatched():Bool{
-		
+
 		if(_rewardedFullyWatched){
 			_rewardedFullyWatched = false;
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	///////Events Callbacks/////////////
-	
+
 	#if ios
 	//Ads Events only happen on iOS.
 	private static function notifyListeners(inEvent:Dynamic)
 	{
 		var event:String = Std.string(Reflect.field(inEvent, "type"));
-		
+
 		if(event == "bannerdiddisplay")
 		{
 			_bannerDidDisplay = true;
@@ -306,42 +329,42 @@ class StartApp {
 		{
 			_rewardedFullyWatched = true;
 		}
-		
+
 	}
 	#end
-	
+
 	#if android
 	private function new() {}
-	
-	public function onBannerDidDisplay() 
+
+	public function onBannerDidDisplay()
 	{
 		_bannerDidDisplay = true;
 	}
-	public function onBannerFailedToLoad() 
+	public function onBannerFailedToLoad()
 	{
 		_bannerFailedToLoad = true;
 	}
-	public function onBannerIsClicked() 
+	public function onBannerIsClicked()
 	{
 		_bannerIsClicked = true;
 	}
-	public function onInterstitialDidLoad() 
+	public function onInterstitialDidLoad()
 	{
 		_interstitialDidLoad = true;
 	}
-	public function onInterstitialFailedToLoad() 
+	public function onInterstitialFailedToLoad()
 	{
 		_interstitialFailedToLoad = true;
 	}
-	public function onInterstitialDidShow() 
+	public function onInterstitialDidShow()
 	{
 		_interstitialDidShow = true;
 	}
-	public function onInterstitialFailedToShow() 
+	public function onInterstitialFailedToShow()
 	{
 		_interstitialFailedToShow = true;
 	}
-	public function onInterstitialDidClosed() 
+	public function onInterstitialDidClosed()
 	{
 		_interstitialDidClosed = true;
 	}
