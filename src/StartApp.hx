@@ -20,8 +20,11 @@ import com.stencyl.Engine;
 import com.stencyl.Input;
 import openfl.events.MouseEvent;
 
-import scripts.ByRobinAssets;
-
+#if ios
+@:buildXml('<include name="${haxelib:startapp}/project/build.xml"/>')
+//This is just here to prevent the otherwise indirectly referenced native code from being stripped at link time.
+@:cppFileCode('extern "C" int startapp_register_prims();void com_byrobin_startapp_link(){startapp_register_prims();}')
+#end
 class StartApp {
 
 	private static var initialized:Bool=false;
@@ -60,9 +63,9 @@ class StartApp {
 	public static function init(gMode:String){
 
 		#if ios
-		var appId:String = ByRobinAssets.SAIosAppID;
+		var appId:String = StartAppConfig.iosAppID;
 		#elseif android
-		var appId:String = ByRobinAssets.SAAndroidAppID;
+		var appId:String = StartAppConfig.androidAppID;
 		#end
 
 		#if ios

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
+
+    <source path="src" />
     
     <section if="android">
-        <classpath name="src" />
-        
         <dependency name="startapp" path="dependencies/startapp" if="android" />
         
         <android extension="com.byrobin.startapp.StartAppEx" />
@@ -11,18 +11,9 @@
 
 	<section if="ios">
         
-        <echo value='|----------------------------------------------------------------------------|' />
-        <echo value='| StartApp: Enable byRobin Extension manager in "Setting->Extension"         |' />
-        <echo value='|----------------------------------------------------------------------------|' />
-        
-        <setenv name="STARTAPP_ENABLED" value="true" />
-        
-        
-		<ndll name="startapp" />
-        
-        <dependency path="frameworks/StartApp.framework"/>
-        
-        <template path="templates" />
+        <config:ios>
+            <cocoapod name="StartAppSDK" version="3.10.2" />
+        </config:ios>
         
 	</section>
 </project>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game-data>
+
+	<include>
+		<field name="enableStartApp" type="boolean" default="true" />
+	</include>
+
+	<config classname="StartAppConfig">
+		<field name="iosAppID"      type="text" if="ios" />
+		<field name="androidAppID"  type="text" if="android" />
+	</config>
+
+</game-data>

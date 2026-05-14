@@ -1,0 +1,19 @@
+{
+  "group": "com.polydes.byrobin",
+  "id": "startapp",
+  "name": "StartApp",
+  "description": "Implements StartApp for iOS and Android.",
+  "tags": ["ads"],
+  "type": "game",
+  "author": "Robin Schaafsma",
+  "website": "https://www.polydes.com/byrobingames/engine/startapp",
+  "repository": "https://www.polydes.com/byrobingames",
+  "target": "stencyl-4.2.0",
+  "version": "0.1.0",
+
+  "icon": "icon.png",
+
+  "engine": {
+    "compatibility": "mobile"
+  }
+}

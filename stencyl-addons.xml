@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<stencyl-addons>
+
+	<property-page-addon target="dashboard.sidebar">
+		
+		<field name="enableStartApp" />
+		
+		<header label="StartApp Account Settings"/>
+		<!-- Note: Fill in your App ID from <a href="http://www.startapp.com">http://www.startapp.com</a> -->
+		<field name="iosAppID" label="iOS App ID" editor="SingleLine" />
+		<field name="androidAppID" label="Android App ID" editor="SingleLine" />
+		
+	</property-page-addon>
+
+</stencyl-addons>

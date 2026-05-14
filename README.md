@@ -4,10 +4,6 @@ For Stencyl 3.4 9280 and above
 
 Stencyl extension for “StartApp” (http://www.startapp.com) for iOS and Android. This extension allows you to easily integrate StartApp on your Stencyl game / application. (http://www.stencyl.com)
 
-### Important!!
-
-This Extension Required the Toolset Extension Manager [https://byrobingames.github.io](https://byrobingames.github.io)
-
 ![startapptoolset](https://byrobingames.github.io/img/startapp/startapptoolset.png)
 
 ## Main Features
@@ -15,15 +11,6 @@ This Extension Required the Toolset Extension Manager [https://byrobingames.gith
   * Banner Support.
   * Interstitial Support.
   * Rewarded Video Support.
-
-## How to Install
-
-To install this Engine Extension, go to the toolset (byRobin Extension Mananger) in the Extension menu of your game inside Stencyl.<br/>
-![toolsetextensionlocation](https://byrobingames.github.io/img/toolset/toolsetextensionlocation.png)<br/>
-Select the Extension from the menu and click on "Download"
-
-If you not have byRobin Extension Mananger installed, install this first.<br/>
-Go to: [https://byrobingames.github.io](https://byrobingames.github.io)
 
 ## Documentation and Block Examples
 
@@ -88,28 +75,6 @@ Gets consent for user (for Europe only).
 - 2017-03-19 (0.0.3) Update iOS SDK to 3.4.2 and Android SDK to 3.5.6, Added Android Gradle support for openfl4
 - 2017-05-16(0.0.4) Update SDK to Android: 3.6.1, Tested for Stencyl 3.5, Required byRobin Toolset Extension Manager
 - 2019-01-11(0.0.5) Update SDK to Android: 3.11.1 IOS: 3.10.2; Added get/set consent block for europe users
-
-## Submitting a Pull Request
-
-This software is opensource.<br/>
-If you want to contribute you can make a pull request
-
-Repository: [https://github.com/byrobingames/startapp](https://github.com/byrobingames/startapp)
-
-Need help with a pull request?<br/>
-[https://help.github.com/articles/creating-a-pull-request/](https://help.github.com/articles/creating-a-pull-request/)
-
-### ANY ISSUES?
-
-Add the issue on GitHub<br/>
-Repository: [https://github.com/byrobingames/startapp/issues](https://github.com/byrobingames/startapp/issues)
-
-Need help with creating a issue?<br/>
-[https://help.github.com/articles/creating-an-issue/](https://help.github.com/articles/creating-an-issue/)
-
-## Donate
-
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=HKLGFCAGKBMFL)<br />
 
 ## Privacy Policy
 
